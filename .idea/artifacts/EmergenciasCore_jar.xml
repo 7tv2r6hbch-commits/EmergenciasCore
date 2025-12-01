@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="EmergenciasCore:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/EmergenciasCore_jar</output-path>
+    <root id="archive" name="EmergenciasCore.jar">
+      <element id="module-output" name="EmergenciasCore" />
+    </root>
+  </artifact>
+</component>
