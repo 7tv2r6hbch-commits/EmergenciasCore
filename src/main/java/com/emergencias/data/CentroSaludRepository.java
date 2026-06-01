@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CentroSaludRepository {
+
     private final ObjectMapper mapper = new ObjectMapper();
     private List<CentroSalud> centros = new ArrayList<>();
 
@@ -18,8 +19,12 @@ public class CentroSaludRepository {
         try (InputStream is = getClass().getClassLoader()
                 .getResourceAsStream("data/centros_salud.json")) {
 
-            if (is == null) throw new IllegalStateException("No se encontró data/centros_salud.json en resources");
+            if (is == null) {
+                throw new IllegalStateException("No se encontró data/centros_salud.json en resources");
+            }
+
             centros = mapper.readValue(is, new TypeReference<List<CentroSalud>>() {});
+
         } catch (Exception e) {
             throw new RuntimeException("Error leyendo centros_salud.json: " + e.getMessage(), e);
         }
@@ -34,16 +39,25 @@ public class CentroSaludRepository {
     }
 
     public Optional<CentroSalud> getByCodigo(String codigo) {
-        if (codigo == null) return Optional.empty();
-        return centros.stream().filter(c -> codigo.equals(c.codigo)).findFirst();
+        if (codigo == null) {
+            return Optional.empty();
+        }
+
+        return centros.stream()
+                .filter(c -> codigo.equals(c.getCodigo()))
+                .findFirst();
     }
 
     public List<CentroSalud> searchByMunicipio(String municipio) {
-        if (municipio == null) return new ArrayList<>();
+        if (municipio == null) {
+            return new ArrayList<>();
+        }
+
         String q = municipio.trim().toLowerCase(Locale.ROOT);
 
         return centros.stream()
-                .filter(c -> c.municipio != null && c.municipio.toLowerCase(Locale.ROOT).contains(q))
+                .filter(c -> c.getMunicipio() != null &&
+                        c.getMunicipio().toLowerCase(Locale.ROOT).contains(q))
                 .collect(Collectors.toList());
     }
 }

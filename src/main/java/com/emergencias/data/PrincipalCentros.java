@@ -10,20 +10,25 @@ public class PrincipalCentros {
 
     static void mostrarCentro(CentroSalud c) {
         System.out.println("--------------------------------");
-        System.out.println("Código: " + c.codigo);
-        System.out.println("Nombre: " + c.nombre);
-        System.out.println("Municipio: " + c.municipio);
-        System.out.println("Dirección: " + c.direccion);
-        System.out.println("Teléfono: " + c.telefono);
-        if (c.foto1 != null && !c.foto1.isBlank()) System.out.println("Foto1: " + c.foto1);
+        System.out.println("Código: " + c.getCodigo());
+        System.out.println("Nombre: " + c.getNombre());
+        System.out.println("Municipio: " + c.getMunicipio());
+        System.out.println("Dirección: " + c.getDireccion());
+        System.out.println("Teléfono: " + c.getTelefono());
+
+        if (c.getFoto1() != null && !c.getFoto1().isBlank()) {
+            System.out.println("Foto1: " + c.getFoto1());
+        }
     }
 
     static void mostrarTodos() {
         List<CentroSalud> lista = repo.getAll();
+
         if (lista.isEmpty()) {
             System.out.println("No hay centros cargados.");
             return;
         }
+
         for (CentroSalud c : lista) {
             mostrarCentro(c);
         }
@@ -34,7 +39,9 @@ public class PrincipalCentros {
         String muni = sc.nextLine();
 
         List<CentroSalud> encontrados = repo.searchByMunicipio(muni);
+
         System.out.println("Centros encontrados: " + encontrados.size());
+
         for (CentroSalud c : encontrados) {
             mostrarCentro(c);
         }
@@ -51,10 +58,10 @@ public class PrincipalCentros {
     }
 
     public static void main(String[] args) {
-        // Cargar datos desde fichero (Unidad 8)
         repo.cargarDesdeFichero();
 
         int opcion;
+
         do {
             System.out.println("\n\t--- MENÚ CENTROS DE SALUD ---");
             System.out.println(" 1. Mostrar todos los centros");
@@ -68,8 +75,9 @@ public class PrincipalCentros {
                 System.out.print("Introduce un número válido: ");
                 sc.nextLine();
             }
+
             opcion = sc.nextInt();
-            sc.nextLine(); // limpiar intro
+            sc.nextLine();
 
             System.out.println("------------------------------------------");
 
